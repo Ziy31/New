@@ -1,0 +1,129 @@
+﻿<Page x:Class="LmrPlast.AddPages.CarsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LmrPlast.AddPages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="CarsPage">
+
+    <Page.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Maroon"/>
+            <Setter Property="BorderBrush" Value="Maroon"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Times New Roman"/>
+        </Style>
+
+        <Style x:Key="StatusStyle" TargetType="TextBlock">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Status}" Value="свободен">
+                    <Setter Property="Foreground" Value="Green" />
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Status}" Value="не свободен">
+                    <Setter Property="Foreground" Value="Red" />
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+    </Page.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="DelivTb" Grid.ColumnSpan="2" Grid.Row="1" Content="Заявки" Margin="10" Click="DelivTb_Click"/>
+
+        <Button x:Name="DriverTb" Grid.ColumnSpan="2" Grid.Row="2" Content="Водители" Margin="10" Click="DriverTb_Click"/>
+
+        <Button x:Name="CarTb" Grid.ColumnSpan="2" Grid.Row="3" Content="Автомобили" Margin="10"/>
+
+        <Button x:Name="CustomerTb" Grid.ColumnSpan="2" Grid.Row="4" Content="Заказчики" Margin="10" Click="CustomerTb_Click"/>
+        
+        <Button x:Name="ProductTb" Grid.ColumnSpan="2" Grid.Row="5" Content="Товары" Margin="10" Click="ProductTb_Click"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="6" VerticalAlignment="Top">
+            <TextBlock Text="Поиск:" Width="175" TextAlignment="Right" VerticalAlignment="Center"/>
+            <TextBox x:Name="SearchTb" Width="225" VerticalAlignment="Center" TextChanged="SearchTb_TextChanged" Margin="5 0 0 0"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="6" VerticalAlignment="Bottom">
+            <TextBlock Text="Фильтр статуса:" Width="175" TextAlignment="Right" VerticalAlignment="Center"/>
+            <CheckBox x:Name="FreeDriver" Content="Свободен" VerticalAlignment="Center" Margin="5 0 0 0" Checked="FreeDriver_Checked" Unchecked="FreeDriver_Unchecked"/>
+            <CheckBox x:Name="UnfreeDriver" Content="Не свободен" VerticalAlignment="Center" Margin="5 0 0 0" Checked="UnfreeDriver_Checked" Unchecked="UnfreeDriver_Unchecked"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" Grid.RowSpan="6"
+     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+
+            <ItemsControl x:Name="CarIC" ItemsSource="{Binding FilteredCar}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" Grid.RowSpan="6">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="5" BorderThickness="1.5" BorderBrush="Gray">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding id_car}" FontSize="20"/>
+                                    <TextBlock Text=". " FontSize="20"/>
+                                    <TextBlock Text="{Binding Brand}" FontSize="20"/>
+                                    <TextBlock Text=" " />
+                                    <TextBlock Text="{Binding Model}" FontSize="20"/>
+                                    <TextBlock Text="        " />
+                                    <TextBlock Text="{Binding AutoNum}" FontSize="20"/>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Год выпуска: " FontSize="14" TextDecorations="Underline"/>
+                                    <TextBlock Text="{Binding YearOfIssue}" FontSize="14"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Вместимость (в тоннах): " FontSize="14" TextDecorations="Underline"/>
+                                    <TextBlock Text="{Binding CapacityTons}" FontSize="14"/>
+                                </StackPanel>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Закрепленный водитель: " FontSize="14" TextDecorations="Underline"/>
+                                    <TextBlock Text="{Binding Drivers.FullName}" FontSize="14"/>
+                                </StackPanel>
+
+                                <TextBlock Text="{Binding Status}" Style="{StaticResource StatusStyle}" FontSize="14"/>
+
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                                    <Button Content="редактировать" Name="Edit_Btn"
+                                        Click="Edit_Btn_Click"/>
+                                    <TextBlock Text=" "/>
+                                    <Button Content="удалить" Name="Delete_Btn"
+                                        Click="Delete_Btn_Click"/>
+                                </StackPanel>
+
+
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+    </Grid>
+</Page>

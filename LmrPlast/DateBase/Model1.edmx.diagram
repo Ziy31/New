@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bd581ba9e76e473eb7e2b735b46c2e4d" Name="Diagram1">
+        <EntityTypeShape EntityType="LmrPlastModel.Autho" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.Cars" Width="1.5" PointX="3" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.Category" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.City" Width="1.5" PointX="0.75" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.Customer" Width="1.5" PointX="3" PointY="22.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.Deliveries" Width="1.5" PointX="5.25" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.DeliveryCostCalculation" Width="1.5" PointX="10.5" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.DepartureAddress" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.DestinationAddress" Width="1.5" PointX="6" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.Drivers" Width="1.5" PointX="0.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.Products" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.Responsible" Width="1.5" PointX="3" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.Route" Width="1.5" PointX="8.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LmrPlastModel.Warehouses" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <AssociationConnector Association="LmrPlastModel.FK_Cars_Drivers1" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Deliveries_Cars" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Deliveries_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Products_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_DepartureAddress_City" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_DepartureAddress_City1" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Destination_address_City" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Сustomer_City" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Deliveries_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Deliveries_DeliveryCostCalculation" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Deliveries_Drivers" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Deliveries_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Deliveries_Responsible" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Deliveries_Route" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Deliveries_Warehouses" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_DeliveryCostCalculation_Deliveries" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_DeliveryCostCalculation_Route" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_DepartureAddress_Warehouses" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Route_DepartureAddress1" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Destination_address_Warehouses" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Route_Destination_address" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Products_Warehouses" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Responsible_Warehouses" ManuallyRouted="false" />
+        <AssociationConnector Association="LmrPlastModel.FK_Deliveries_Cars1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

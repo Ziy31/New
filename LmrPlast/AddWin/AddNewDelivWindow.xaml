@@ -1,0 +1,117 @@
+﻿<Window x:Class="LmrPlast.AddWin.AddNewDelivWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LmrPlast.AddWin"
+        mc:Ignorable="d"
+        Title="AddNewDelivWindow" Height="450" Width="800">
+
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Maroon"/>
+            <Setter Property="BorderBrush" Value="Maroon"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontFamily" Value="Times New Roman"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <Line X1="0" Y1="5" X2="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}}" Y2="5" 
+          Stroke="Black" StrokeThickness="2" Grid.ColumnSpan="8" Grid.Row="0"/>
+
+        <TextBlock Text="Новая заявка" FontSize="35" FontWeight="Bold" 
+               Grid.ColumnSpan="8" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Название маршрута:"/>
+            <ComboBox x:Name="RouteBox" Width="85">
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Товар:"/>
+            <ComboBox x:Name="ProductBox" Width="85">
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Клиент:"/>
+            <ComboBox x:Name="CustomerBox" Width="85">
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Ответственный:"/>
+            <ComboBox x:Name="ResBox" Width="85">
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Водитель:"/>
+            <ComboBox x:Name="DriverBox" Width="85">
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Авто:"/>
+            <ComboBox x:Name="CarBox" Width="85">
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Категория:"/>
+            <ComboBox x:Name="CategBox" Width="85">
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Склад:"/>
+            <ComboBox x:Name="WHBox" Width="85">
+            </ComboBox>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Кол-во:"/>
+            <TextBox x:Name="QuanTxb" Width="85"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Дата отправки:"/>
+            <DatePicker x:Name="Depar"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Дата назначения:" />
+            <DatePicker x:Name="Arrival"/>
+        </StackPanel>
+
+        <Button x:Name="SaveBtn" Content="Создать" Click="SaveBtn_Click" Grid.Row="7" Grid.Column="6" Grid.ColumnSpan="2"/>
+
+    </Grid>
+</Window>
