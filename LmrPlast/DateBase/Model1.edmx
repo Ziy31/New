@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище LmrPlastModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище LmrPlastModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Autho">
           <Key>
             <PropertyRef Name="id" />
@@ -67,13 +67,14 @@
           <Property Name="id_warehouse" Type="int" />
           <Property Name="id_customer" Type="int" Nullable="false" />
           <Property Name="Status" Type="varchar" MaxLength="30" />
-          <Property Name="id_DeliveryCostCalculation" Type="int" />
+          <Property Name="CostKM" Type="int" />
+          <Property Name="TotalDeliveryCost" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="DeliveryCostCalculation">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_delivery" Type="int" Nullable="false" />
           <Property Name="id_route" Type="int" Nullable="false" />
           <Property Name="FuelCost" Type="decimal" Precision="18" Scale="0" />
@@ -161,6 +162,7 @@
             <PropertyRef Name="id_warehouse" />
           </Key>
           <Property Name="id_warehouse" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
           <Property Name="CapacityTons" Type="decimal" Precision="10" Scale="2" />
           <Property Name="CurrentStockTons" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
@@ -212,18 +214,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Deliveries_DeliveryCostCalculation">
-          <End Role="DeliveryCostCalculation" Type="Self.DeliveryCostCalculation" Multiplicity="0..1" />
-          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DeliveryCostCalculation">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Deliveries">
-              <PropertyRef Name="id_DeliveryCostCalculation" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Deliveries_Drivers">
           <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
           <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
@@ -248,15 +238,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Deliveries_Responsible">
+        <Association Name="FK_Deliveries_Responsible1">
           <End Role="Responsible" Type="Self.Responsible" Multiplicity="1" />
-          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="0..1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Responsible">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Deliveries">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="id_responsible" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -472,10 +462,6 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Deliveries" EntitySet="Deliveries" />
           </AssociationSet>
-          <AssociationSet Name="FK_Deliveries_DeliveryCostCalculation" Association="Self.FK_Deliveries_DeliveryCostCalculation">
-            <End Role="DeliveryCostCalculation" EntitySet="DeliveryCostCalculation" />
-            <End Role="Deliveries" EntitySet="Deliveries" />
-          </AssociationSet>
           <AssociationSet Name="FK_Deliveries_Drivers" Association="Self.FK_Deliveries_Drivers">
             <End Role="Drivers" EntitySet="Drivers" />
             <End Role="Deliveries" EntitySet="Deliveries" />
@@ -484,7 +470,7 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="Deliveries" EntitySet="Deliveries" />
           </AssociationSet>
-          <AssociationSet Name="FK_Deliveries_Responsible" Association="Self.FK_Deliveries_Responsible">
+          <AssociationSet Name="FK_Deliveries_Responsible1" Association="Self.FK_Deliveries_Responsible1">
             <End Role="Responsible" EntitySet="Responsible" />
             <End Role="Deliveries" EntitySet="Deliveries" />
           </AssociationSet>
@@ -549,7 +535,8 @@
             <End Role="Customer" EntitySet="Customer" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LmrPlastModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -575,7 +562,7 @@
           <Property Name="AutoNum" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="id_driver" Type="Int32" />
           <NavigationProperty Name="Drivers" Relationship="Self.FK_Cars_Drivers1" FromRole="Cars" ToRole="Drivers" />
-          <NavigationProperty Name="Deliveries1" Relationship="LmrPlastModel.FK_Deliveries_Cars1" FromRole="Cars" ToRole="Deliveries" />
+          <NavigationProperty Name="Deliveries" Relationship="Self.FK_Deliveries_Cars1" FromRole="Cars" ToRole="Deliveries" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -612,7 +599,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_driver" Type="Int32" Nullable="false" />
           <Property Name="id_car" Type="Int32" Nullable="false" />
           <Property Name="id_responsible" Type="Int32" Nullable="false" />
@@ -625,31 +612,29 @@
           <Property Name="id_warehouse" Type="Int32" />
           <Property Name="id_customer" Type="Int32" Nullable="false" />
           <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="id_DeliveryCostCalculation" Type="Int32" />
-          <NavigationProperty Name="Cars" Relationship="Self.FK_Deliveries_Cars" FromRole="Deliveries" ToRole="Cars" />
+          <Property Name="CostKM" Type="Int32" />
+          <Property Name="TotalDeliveryCost" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Cars" Relationship="Self.FK_Deliveries_Cars1" FromRole="Deliveries" ToRole="Cars" />
           <NavigationProperty Name="Category" Relationship="Self.FK_Deliveries_Category" FromRole="Deliveries" ToRole="Category" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_Deliveries_Customer" FromRole="Deliveries" ToRole="Customer" />
-          <NavigationProperty Name="DeliveryCostCalculation" Relationship="Self.FK_Deliveries_DeliveryCostCalculation" FromRole="Deliveries" ToRole="DeliveryCostCalculation" />
           <NavigationProperty Name="Drivers" Relationship="Self.FK_Deliveries_Drivers" FromRole="Deliveries" ToRole="Drivers" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Deliveries_Products" FromRole="Deliveries" ToRole="Products" />
-          <NavigationProperty Name="Responsible" Relationship="Self.FK_Deliveries_Responsible" FromRole="Deliveries" ToRole="Responsible" />
+          <NavigationProperty Name="Responsible" Relationship="Self.FK_Deliveries_Responsible1" FromRole="Deliveries" ToRole="Responsible" />
           <NavigationProperty Name="Route" Relationship="Self.FK_Deliveries_Route" FromRole="Deliveries" ToRole="Route" />
           <NavigationProperty Name="Warehouses" Relationship="Self.FK_Deliveries_Warehouses" FromRole="Deliveries" ToRole="Warehouses" />
-          <NavigationProperty Name="DeliveryCostCalculation1" Relationship="Self.FK_DeliveryCostCalculation_Deliveries" FromRole="Deliveries" ToRole="DeliveryCostCalculation" />
-          <NavigationProperty Name="Cars1" Relationship="LmrPlastModel.FK_Deliveries_Cars1" FromRole="Deliveries" ToRole="Cars" />
+          <NavigationProperty Name="DeliveryCostCalculation" Relationship="Self.FK_DeliveryCostCalculation_Deliveries" FromRole="Deliveries" ToRole="DeliveryCostCalculation" />
         </EntityType>
         <EntityType Name="DeliveryCostCalculation">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_delivery" Type="Int32" Nullable="false" />
           <Property Name="id_route" Type="Int32" Nullable="false" />
           <Property Name="FuelCost" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="CostKM" Type="Int32" Nullable="false" />
           <Property Name="TotalDeliveryCost" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
-          <NavigationProperty Name="Deliveries" Relationship="Self.FK_Deliveries_DeliveryCostCalculation" FromRole="DeliveryCostCalculation" ToRole="Deliveries" />
-          <NavigationProperty Name="Deliveries1" Relationship="Self.FK_DeliveryCostCalculation_Deliveries" FromRole="DeliveryCostCalculation" ToRole="Deliveries" />
+          <NavigationProperty Name="Deliveries" Relationship="Self.FK_DeliveryCostCalculation_Deliveries" FromRole="DeliveryCostCalculation" ToRole="Deliveries" />
           <NavigationProperty Name="Route" Relationship="Self.FK_DeliveryCostCalculation_Route" FromRole="DeliveryCostCalculation" ToRole="Route" />
         </EntityType>
         <EntityType Name="DepartureAddress">
@@ -719,7 +704,7 @@
           <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Post" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="id_warehouse" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Deliveries" Relationship="Self.FK_Deliveries_Responsible" FromRole="Responsible" ToRole="Deliveries" />
+          <NavigationProperty Name="Deliveries" Relationship="Self.FK_Deliveries_Responsible1" FromRole="Responsible" ToRole="Deliveries" />
           <NavigationProperty Name="Warehouses" Relationship="Self.FK_Responsible_Warehouses" FromRole="Responsible" ToRole="Warehouses" />
         </EntityType>
         <EntityType Name="Route">
@@ -751,6 +736,7 @@
             <PropertyRef Name="id_warehouse" />
           </Key>
           <Property Name="id_warehouse" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CapacityTons" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="CurrentStockTons" Type="Decimal" Precision="10" Scale="2" />
           <NavigationProperty Name="Deliveries" Relationship="Self.FK_Deliveries_Warehouses" FromRole="Warehouses" ToRole="Deliveries" />
@@ -771,7 +757,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Deliveries_Cars">
+        <Association Name="FK_Deliveries_Cars1">
           <End Role="Cars" Type="Self.Cars" Multiplicity="1" />
           <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
           <ReferentialConstraint>
@@ -779,7 +765,7 @@
               <PropertyRef Name="id_car" />
             </Principal>
             <Dependent Role="Deliveries">
-              <PropertyRef Name="id_responsible" />
+              <PropertyRef Name="id_car" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -867,18 +853,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Deliveries_DeliveryCostCalculation">
-          <End Role="DeliveryCostCalculation" Type="Self.DeliveryCostCalculation" Multiplicity="0..1" />
-          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DeliveryCostCalculation">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Deliveries">
-              <PropertyRef Name="id_DeliveryCostCalculation" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Deliveries_Drivers">
           <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
           <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
@@ -903,15 +877,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Deliveries_Responsible">
+        <Association Name="FK_Deliveries_Responsible1">
           <End Role="Responsible" Type="Self.Responsible" Multiplicity="1" />
-          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="0..1" />
+          <End Role="Deliveries" Type="Self.Deliveries" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Responsible">
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="Deliveries">
-              <PropertyRef Name="id" />
+              <PropertyRef Name="id_responsible" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1035,7 +1009,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="LmrPlastEntities2" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="LmrPlastEntities6" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Autho" EntityType="Self.Autho" />
           <EntitySet Name="Cars" EntityType="Self.Cars" />
           <EntitySet Name="Category" EntityType="Self.Category" />
@@ -1055,7 +1029,7 @@
             <End Role="Drivers" EntitySet="Drivers" />
             <End Role="Cars" EntitySet="Cars" />
           </AssociationSet>
-          <AssociationSet Name="FK_Deliveries_Cars" Association="Self.FK_Deliveries_Cars">
+          <AssociationSet Name="FK_Deliveries_Cars1" Association="Self.FK_Deliveries_Cars1">
             <End Role="Cars" EntitySet="Cars" />
             <End Role="Deliveries" EntitySet="Deliveries" />
           </AssociationSet>
@@ -1087,10 +1061,6 @@
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Deliveries" EntitySet="Deliveries" />
           </AssociationSet>
-          <AssociationSet Name="FK_Deliveries_DeliveryCostCalculation" Association="Self.FK_Deliveries_DeliveryCostCalculation">
-            <End Role="DeliveryCostCalculation" EntitySet="DeliveryCostCalculation" />
-            <End Role="Deliveries" EntitySet="Deliveries" />
-          </AssociationSet>
           <AssociationSet Name="FK_Deliveries_Drivers" Association="Self.FK_Deliveries_Drivers">
             <End Role="Drivers" EntitySet="Drivers" />
             <End Role="Deliveries" EntitySet="Deliveries" />
@@ -1099,7 +1069,7 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="Deliveries" EntitySet="Deliveries" />
           </AssociationSet>
-          <AssociationSet Name="FK_Deliveries_Responsible" Association="Self.FK_Deliveries_Responsible">
+          <AssociationSet Name="FK_Deliveries_Responsible1" Association="Self.FK_Deliveries_Responsible1">
             <End Role="Responsible" EntitySet="Responsible" />
             <End Role="Deliveries" EntitySet="Deliveries" />
           </AssociationSet>
@@ -1143,29 +1113,13 @@
             <End Role="Warehouses" EntitySet="Warehouses" />
             <End Role="Responsible" EntitySet="Responsible" />
           </AssociationSet>
-          <AssociationSet Name="FK_Deliveries_Cars1" Association="LmrPlastModel.FK_Deliveries_Cars1">
-            <End Role="Cars" EntitySet="Cars" />
-            <End Role="Deliveries" EntitySet="Deliveries" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_Deliveries_Cars1">
-          <End Type="LmrPlastModel.Cars" Role="Cars" Multiplicity="1" />
-          <End Type="LmrPlastModel.Deliveries" Role="Deliveries" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cars">
-              <PropertyRef Name="id_car" />
-            </Principal>
-            <Dependent Role="Deliveries">
-              <PropertyRef Name="id_car" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище LmrPlastModelContainer" CdmEntityContainer="LmrPlastEntities2">
+        <EntityContainerMapping StorageEntityContainer="Хранилище LmrPlastModelContainer" CdmEntityContainer="LmrPlastEntities6">
           <EntitySetMapping Name="Autho">
             <EntityTypeMapping TypeName="LmrPlastModel.Autho">
               <MappingFragment StoreEntitySet="Autho">
@@ -1232,7 +1186,8 @@
                 <ScalarProperty Name="id_warehouse" ColumnName="id_warehouse" />
                 <ScalarProperty Name="id_customer" ColumnName="id_customer" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="id_DeliveryCostCalculation" ColumnName="id_DeliveryCostCalculation" />
+                <ScalarProperty Name="CostKM" ColumnName="CostKM" />
+                <ScalarProperty Name="TotalDeliveryCost" ColumnName="TotalDeliveryCost" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1335,6 +1290,7 @@
             <EntityTypeMapping TypeName="LmrPlastModel.Warehouses">
               <MappingFragment StoreEntitySet="Warehouses">
                 <ScalarProperty Name="id_warehouse" ColumnName="id_warehouse" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="CapacityTons" ColumnName="CapacityTons" />
                 <ScalarProperty Name="CurrentStockTons" ColumnName="CurrentStockTons" />
               </MappingFragment>

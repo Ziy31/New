@@ -53,6 +53,10 @@
             <ComboBox x:Name="RouteBox" Width="85">
             </ComboBox>
         </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center">
+            <TextBlock Text="Адрес отправки: "/>
+            <TextBlock  x:Name="txtAdreess"/>
+        </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Top">
             <TextBlock Text="Товар:"/>
@@ -66,6 +70,12 @@
             </ComboBox>
         </StackPanel>
 
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" VerticalAlignment="Center">
+            <TextBlock Text="Клиент:"/>
+            <TextBlock x:Name="txtCustomer">
+            </TextBlock>
+        </StackPanel>
+
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
             <TextBlock Text="Ответственный:"/>
             <ComboBox x:Name="ResBox" Width="85">
@@ -77,23 +87,21 @@
             <ComboBox x:Name="DriverBox" Width="85">
             </ComboBox>
         </StackPanel>
-
-        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Top">
-            <TextBlock Text="Авто:"/>
-            <ComboBox x:Name="CarBox" Width="85">
-            </ComboBox>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Авто: "/>
+            <TextBlock x:Name="txtCar"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Top">
-            <TextBlock Text="Категория:"/>
-            <ComboBox x:Name="CategBox" Width="85">
-            </ComboBox>
+            <TextBlock Text="Категория: "/>
+            <TextBlock x:Name="txtCat">
+            </TextBlock>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
-            <TextBlock Text="Склад:"/>
-            <ComboBox x:Name="WHBox" Width="85">
-            </ComboBox>
+            <TextBlock Text="Склад: "/>
+            <TextBlock x:Name="txtWarehouse">
+            </TextBlock>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="5" Grid.ColumnSpan="2" VerticalAlignment="Top">
@@ -112,6 +120,26 @@
         </StackPanel>
 
         <Button x:Name="SaveBtn" Content="Создать" Click="SaveBtn_Click" Grid.Row="7" Grid.Column="6" Grid.ColumnSpan="2"/>
+
+
+        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Стоимость топлива:"/>
+            <TextBox x:Name="FuelPriceTextBox" Width="85"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <TextBlock Text="Стоимость км:"/>
+            <TextBox x:Name="PricePerKmTextBox" Width="85"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="5" Grid.Column="5" Grid.ColumnSpan="3" VerticalAlignment="Top">
+            <TextBlock Text="Расстояние (КМ): "/>
+            <TextBlock x:Name="txtDistance"/>
+        </StackPanel>
+
+        <Button x:Name="Price" Content="Рассчитать" Click="Price_Click" Grid.Column="7" Grid.Row="6"/>
+
+        <TextBlock x:Name="ResultTextBlock" FontSize="16" FontWeight="Bold" Margin="0,10,0,0" Grid.Column="2" Grid.ColumnSpan="4" Grid.Row="6"/>
 
     </Grid>
 </Window>

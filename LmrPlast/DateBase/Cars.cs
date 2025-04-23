@@ -17,7 +17,7 @@ namespace LmrPlast.DateBase
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cars()
         {
-            this.Deliveries1 = new HashSet<Deliveries>();
+            this.Deliveries = new HashSet<Deliveries>();
         }
     
         public int id_car { get; set; }
@@ -32,6 +32,6 @@ namespace LmrPlast.DateBase
     
         public virtual Drivers Drivers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Deliveries> Deliveries1 { get; set; }
+        public virtual ICollection<Deliveries> Deliveries { get; set; }
     }
 }

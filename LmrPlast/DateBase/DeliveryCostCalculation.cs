@@ -14,12 +14,6 @@ namespace LmrPlast.DateBase
     
     public partial class DeliveryCostCalculation
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public DeliveryCostCalculation()
-        {
-            this.Deliveries = new HashSet<Deliveries>();
-        }
-    
         public int id { get; set; }
         public int id_delivery { get; set; }
         public int id_route { get; set; }
@@ -27,9 +21,7 @@ namespace LmrPlast.DateBase
         public int CostKM { get; set; }
         public decimal TotalDeliveryCost { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Deliveries> Deliveries { get; set; }
-        public virtual Deliveries Deliveries1 { get; set; }
+        public virtual Deliveries Deliveries { get; set; }
         public virtual Route Route { get; set; }
     }
 }

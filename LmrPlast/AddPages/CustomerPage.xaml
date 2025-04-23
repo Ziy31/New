@@ -50,28 +50,34 @@
 
         <Button x:Name="ProductTb" Grid.ColumnSpan="2" Grid.Row="5" Content="Товары" Margin="10" Click="ProductTb_Click"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="6" VerticalAlignment="Top">
+        <StackPanel Orientation="Horizontal" Grid.Column="2" Grid.ColumnSpan="6" VerticalAlignment="Center">
             <TextBlock Text="Поиск:" Width="175" TextAlignment="Right" VerticalAlignment="Center"/>
             <TextBox x:Name="SearchTb" Width="225" VerticalAlignment="Center" TextChanged="SearchTb_TextChanged" Margin="5 0 0 0"/>
         </StackPanel>
 
 
-        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom" Margin="0 0 0 5">
-            <TextBlock Text="Сортировка" VerticalAlignment="Center" TextAlignment="Right"/>
-            <TextBlock Text="по магазинам:" VerticalAlignment="Center" TextAlignment="Right"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="3" VerticalAlignment="Center">
+            <TextBlock Text="По магазинам" VerticalAlignment="Center" TextAlignment="Right"/>
+            <ComboBox x:Name="FiltCb" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="185" Margin="3 0 5 0" SelectionChanged="FiltCb_SelectionChanged"/>
         </StackPanel>
-        <ComboBox x:Name="FiltCb" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="185" Margin="3 0 5 10" SelectionChanged="FiltCb_SelectionChanged" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="2"/>
+        
 
-        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="5" VerticalAlignment="Bottom" Margin="0 0 0 5">
-            <TextBlock Text="Сортировка" VerticalAlignment="Center" TextAlignment="Right"/>
-            <TextBlock Text="по городам:" VerticalAlignment="Center" TextAlignment="Right"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="3" VerticalAlignment="Center">
+            <TextBlock Text="По городам" VerticalAlignment="Center" TextAlignment="Right"/>
+            <ComboBox x:Name="Filt_CityCb" VerticalAlignment="Center" ItemsSource="{Binding city}"  HorizontalAlignment="Left" Width="185" Margin="3 0 5 0" SelectionChanged="Filt_CityCb_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding CityName}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
-        <ComboBox x:Name="Filt_CityCb" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="185" Margin="3 0 5 10" SelectionChanged="Filt_CityCb_SelectionChanged" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2"/>
+       
         
         <ScrollViewer Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" Grid.RowSpan="6"
              VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
 
-            <ItemsControl ItemsSource="{Binding FilteredCustomers}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" Grid.RowSpan="6">
+            <ItemsControl x:Name="CustomerLV" ItemsSource="{Binding Customers}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" Grid.RowSpan="6">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border Margin="5" BorderThickness="1.5" BorderBrush="Gray">

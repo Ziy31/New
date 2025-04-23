@@ -14,12 +14,19 @@ namespace LmrPlast.DateBase
     
     public partial class Responsible
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Responsible()
+        {
+            this.Deliveries = new HashSet<Deliveries>();
+        }
+    
         public int id { get; set; }
         public string FullName { get; set; }
         public string Post { get; set; }
         public int id_warehouse { get; set; }
     
-        public virtual Deliveries Deliveries { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Deliveries> Deliveries { get; set; }
         public virtual Warehouses Warehouses { get; set; }
     }
 }

@@ -75,55 +75,76 @@
             <CheckBox x:Name="UnfreeDriver" Content="Не свободен" VerticalAlignment="Center" Margin="5 0 0 0" Checked="UnfreeDriver_Checked" Unchecked="UnfreeDriver_Unchecked"/>
         </StackPanel>
 
-        <ScrollViewer Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" Grid.RowSpan="6"
-     VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
-
-            <ItemsControl x:Name="CarIC" ItemsSource="{Binding FilteredCar}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" Grid.RowSpan="6">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border Margin="5" BorderThickness="1.5" BorderBrush="Gray">
-                            <StackPanel Orientation="Vertical">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding id_car}" FontSize="20"/>
-                                    <TextBlock Text=". " FontSize="20"/>
-                                    <TextBlock Text="{Binding Brand}" FontSize="20"/>
-                                    <TextBlock Text=" " />
-                                    <TextBlock Text="{Binding Model}" FontSize="20"/>
-                                    <TextBlock Text="        " />
-                                    <TextBlock Text="{Binding AutoNum}" FontSize="20"/>
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Год выпуска: " FontSize="14" TextDecorations="Underline"/>
-                                    <TextBlock Text="{Binding YearOfIssue}" FontSize="14"/>
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Вместимость (в тоннах): " FontSize="14" TextDecorations="Underline"/>
-                                    <TextBlock Text="{Binding CapacityTons}" FontSize="14"/>
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Закрепленный водитель: " FontSize="14" TextDecorations="Underline"/>
-                                    <TextBlock Text="{Binding Drivers.FullName}" FontSize="14"/>
-                                </StackPanel>
-
-                                <TextBlock Text="{Binding Status}" Style="{StaticResource StatusStyle}" FontSize="14"/>
-
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                                    <Button Content="редактировать" Name="Edit_Btn"
-                                        Click="Edit_Btn_Click"/>
-                                    <TextBlock Text=" "/>
-                                    <Button Content="удалить" Name="Delete_Btn"
-                                        Click="Delete_Btn_Click"/>
-                                </StackPanel>
-
-
-                            </StackPanel>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-
+        <ListView x:Name="CarLV" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" Grid.RowSpan="6" ItemsSource="{Binding Car}">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="Id" Width="40">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding id_car}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Марка/Модель">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Brand}"/>
+                                        <TextBlock Text="{Binding Model}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Гос.Номера">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding AutoNum}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Год выпуска">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding YearOfIssue}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Вместимость (в т.)">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding CapacityTons}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Закреп. водитель">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Drivers.FullName}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Статус">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Status}" Style="{StaticResource StatusStyle}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                                        <Button Content="редактировать" Name="Edit_Btn" Click="Edit_Btn_Click"/>
+                                        <TextBlock Text=" "/>
+                                        <Button Content="удалить" Name="Delete_Btn" Click="Delete_Btn_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Page>

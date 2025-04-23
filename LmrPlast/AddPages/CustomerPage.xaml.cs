@@ -23,37 +23,29 @@ namespace LmrPlast.AddPages
     /// </summary>
     public partial class CustomerPage : Page
     {
-        public static ObservableCollection<Customer> Customers { get; set; }
-        public ObservableCollection<Customer> FilteredCustomers { get; set; }
+        public static List<Customer> Customers { get; set; }
+        public static List<City> city { get; set; }
         public CustomerPage()
         {
             InitializeComponent();
-            Customers = new ObservableCollection<Customer>(LMRDB.LMREntities.Customer.ToList());
-            FilteredCustomers = new ObservableCollection<Customer>(Customers);
+            Customers = new List<Customer>(LMRDB.LMREntities.Customer).ToList();
+            var city = new List<City>(LMRDB.LMREntities.City).ToList();
+            city.Insert(0, new City() { id_city = -1, CityName = "Все" });
             this.DataContext = this;
-
-            var customers = Customers.Select(c=>c.Title).Distinct().ToList();
-            customers.Insert(0, "Все");
-            foreach (var name in customers)
-            {
-                FiltCb.Items.Add(name);
-                FiltCb.SelectedIndex = 0;
-            }
-
         }
 
         private void SearchTb_TextChanged(object sender, TextChangedEventArgs e)
         {
             string searchQuery = SearchTb.Text.ToLower();
 
-            FilteredCustomers.Clear();
+            Customers.Clear();
             foreach (var customer in Customers)
             {
                 if (customer.Title.ToLower().Contains(searchQuery) ||
                     customer.City.CityName.ToLower().Contains(searchQuery) ||
                     customer.Address.ToLower().Contains(searchQuery))
                 {
-                    FilteredCustomers.Add(customer);
+                    Customers.Add(customer);
                 }
             }
         }
@@ -80,32 +72,21 @@ namespace LmrPlast.AddPages
 
         private void FiltCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedCust = FiltCb.SelectedItem as string;
-
-            if (selectedCust == "Все")
-            {
-                FilteredCustomers.Clear();
-                foreach (var customer in Customers)
-                {
-                    FilteredCustomers.Add(customer);
-                }
-            }
-            else
-            {
-                FilteredCustomers.Clear();
-                foreach (var customer in Customers)
-                {
-                    if (customer.Title == selectedCust)
-                    {
-                        FilteredCustomers.Add(customer);
-                    }
-                }
-            }
+            
         }
 
         private void Filt_CityCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            var selectedCust = FiltCb.SelectedItem as City;
+
+            if (selectedCust.id_city != -1)
+            {
+                CustomerLV.ItemsSource = Customers.Where(i => i.id_city == i.id_city).ToList();
+            }
+            else
+            {
+                CustomerLV.ItemsSource = Customers.ToList();
+            }
         }
 
 

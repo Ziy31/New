@@ -67,7 +67,20 @@ namespace LmrPlast.AddPages
         private void NewDelivBtn_Click(object sender, RoutedEventArgs e)
         {
             var addNewDelivWindow = new AddNewDelivWindow();
+            addNewDelivWindow.DeliveryAdded += AddNewDelivWindow_DeliveryAdded;
             addNewDelivWindow.ShowDialog();
+        }
+
+        private void AddNewDelivWindow_DeliveryAdded(object sender, EventArgs e)
+        {
+            // Обновляем ListView здесь
+            UpdateListView();
+        }
+
+        private void UpdateListView()
+        {
+            // Код обновления ListView (например, повторная загрузка данных)
+            DrivLV.ItemsSource = LMRDB.LMREntities.Deliveries.ToList();
         }
     }
 }

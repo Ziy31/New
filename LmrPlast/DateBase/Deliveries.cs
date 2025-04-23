@@ -17,7 +17,7 @@ namespace LmrPlast.DateBase
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Deliveries()
         {
-            this.DeliveryCostCalculation1 = new HashSet<DeliveryCostCalculation>();
+            this.DeliveryCostCalculation = new HashSet<DeliveryCostCalculation>();
         }
     
         public int id { get; set; }
@@ -33,19 +33,18 @@ namespace LmrPlast.DateBase
         public Nullable<int> id_warehouse { get; set; }
         public int id_customer { get; set; }
         public string Status { get; set; }
-        public Nullable<int> id_DeliveryCostCalculation { get; set; }
+        public Nullable<int> CostKM { get; set; }
+        public Nullable<decimal> TotalDeliveryCost { get; set; }
     
         public virtual Cars Cars { get; set; }
         public virtual Category Category { get; set; }
         public virtual Customer Customer { get; set; }
-        public virtual DeliveryCostCalculation DeliveryCostCalculation { get; set; }
         public virtual Drivers Drivers { get; set; }
         public virtual Products Products { get; set; }
         public virtual Responsible Responsible { get; set; }
         public virtual Route Route { get; set; }
         public virtual Warehouses Warehouses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeliveryCostCalculation> DeliveryCostCalculation1 { get; set; }
-        public virtual Cars Cars1 { get; set; }
+        public virtual ICollection<DeliveryCostCalculation> DeliveryCostCalculation { get; set; }
     }
 }

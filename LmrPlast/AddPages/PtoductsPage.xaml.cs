@@ -22,23 +22,16 @@ namespace LmrPlast.AddPages
     /// </summary>
     public partial class PtoductsPage : Page
     {
-        public static ObservableCollection<Products> Product {  get; set; }
-        public static ObservableCollection<Products> FilteredProduct {  get; set; }
+        public static List<Products> Product {  get; set; }
+        public static List<Category> category { get; set; }
+
+        public static List<Warehouses> warehouses { get; set; }
         public PtoductsPage()
         {
             InitializeComponent();
-            Product = new ObservableCollection<Products>(LMRDB.LMREntities.Products.ToList());
-            FilteredProduct = new ObservableCollection<Products>(Product);
-
-            var categories = Product.Select(p => p.Category.Title).Distinct().ToList();
-            categories.Insert(0, "Все");
-            foreach (var category in categories)
-            {
-                FiltCb.Items.Add(category);
-            }
-
-            FiltCb.SelectedIndex = 0; // Выбираем "Все" по умолчанию
-
+            Product = new List<Products>(LMRDB.LMREntities.Products.ToList());
+            category = new List<Category>(LMRDB.LMREntities.Category.ToList());
+            category.Insert(0, new Category() { id_category = -1, Title = "Все" });
             this.DataContext = this;
 
             
@@ -66,43 +59,33 @@ namespace LmrPlast.AddPages
 
         private void SearchTb_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchQuery = SearchTb.Text.ToLower();
-
-            FilteredProduct.Clear();
-            foreach (var products in Product)
+            string search = SearchTb.Text.Trim();
+            if(search =="")
             {
-                if (products.Title.ToLower().Contains(searchQuery) ||
-                    products.art.ToString().ToLower().Contains(searchQuery) ||
-                    products.Quantity.ToString().ToLower().Contains(searchQuery))
-                {
-                    FilteredProduct.Add(products);
-                }
+                ProductsLV.ItemsSource = Product.ToList();
+            }
+            else
+            {
+                ProductsLV.ItemsSource = Product.Where(i=>i.Title.StartsWith(search, StringComparison.OrdinalIgnoreCase)).ToList();
             }
         }
 
         private void FiltCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedCategory = FiltCb.SelectedItem as string;
-
-            if (selectedCategory == "Все")
+            var c = FiltCb.SelectedItem as Category;
+            if(c.id_category!=-1)
             {
-                FilteredProduct.Clear();
-                foreach (var product in Product)
-                {
-                    FilteredProduct.Add(product);
-                }
+                ProductsLV.ItemsSource = Product.Where(i=>i.id_category == c.id_category).ToList();
             }
             else
             {
-                FilteredProduct.Clear();
-                foreach (var product in Product)
-                {
-                    if (product.Category.Title == selectedCategory)
-                    {
-                        FilteredProduct.Add(product);
-                    }
-                }
+                ProductsLV.ItemsSource = Product.ToList();
             }
+        }
+
+        private void FiltWHCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

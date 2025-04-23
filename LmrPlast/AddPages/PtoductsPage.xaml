@@ -50,17 +50,23 @@
 
         <Button x:Name="ProductTb" Grid.ColumnSpan="2" Grid.Row="5" Content="Товары" Margin="10"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="6" VerticalAlignment="Top">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="5" VerticalAlignment="Center">
             <TextBlock Text="Поиск:" Width="175" TextAlignment="Right" VerticalAlignment="Center"/>
             <TextBox x:Name="SearchTb" Width="225" VerticalAlignment="Center" TextChanged="SearchTb_TextChanged" Margin="5 0 0 0"/>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="6" VerticalAlignment="Bottom">
-            <TextBlock Text="Сортировка:" Width="175" Margin="0 0 0 5" TextAlignment="Right" VerticalAlignment="Center"/>
-            <ComboBox x:Name="FiltCb" VerticalAlignment="Center"  Width="225" Margin="5 0 0 5" SelectionChanged="FiltCb_SelectionChanged"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="Категория:"  Margin="5 0 0 5" TextAlignment="Right" VerticalAlignment="Center"/>
+            <ComboBox x:Name="FiltCb" ItemsSource="{Binding category}"  VerticalAlignment="Center" HorizontalAlignment="Left" Width="230" Margin="3 0 0 0" SelectionChanged="FiltCb_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Title}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
 
-        <ListView x:Name="ProductsLV" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" Grid.RowSpan="6" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Center" ItemsSource="{Binding FilteredProduct}">
+        <ListView x:Name="ProductsLV" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" Grid.RowSpan="6" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Center" ItemsSource="{Binding Product}">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>

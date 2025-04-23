@@ -8,6 +8,6 @@ namespace LmrPlast.DateBase
 {
     public class LMRDB
     {
-        public static LmrPlastEntities2 LMREntities = new LmrPlastEntities2();
+        public static LmrPlastEntities6 LMREntities = new LmrPlastEntities6();
     }
 }

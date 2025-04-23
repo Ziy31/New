@@ -67,7 +67,7 @@
 
         <Button x:Name="ProductTb" Grid.ColumnSpan="2" Grid.Row="5" Content="Товары" Margin="10" Click="ProductTb_Click"/>
         
-        <ListView ItemsSource="{Binding FilteredDeliveries}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" Grid.RowSpan="6" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+        <ListView x:Name="DrivLV" ItemsSource="{Binding FilteredDeliveries}" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="6" Grid.RowSpan="6" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                   HorizontalContentAlignment="Center">
 
             <ListView.ItemsPanel>
@@ -89,7 +89,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="Стоимость доставки: " FontSize="14"/>
                                 <TextBlock Text=" "/>
-                                <TextBlock Text="{Binding DeliveryCostCalculation.TotalDeliveryCost}" FontSize="14"/>
+                                <TextBlock Text="{Binding TotalDeliveryCost, StringFormat={}{0:N0} руб.}" FontSize="14"/>
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal">

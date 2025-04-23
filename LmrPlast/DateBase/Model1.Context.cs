@@ -13,10 +13,10 @@ namespace LmrPlast.DateBase
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class LmrPlastEntities2 : DbContext
+    public partial class LmrPlastEntities6 : DbContext
     {
-        public LmrPlastEntities2()
-            : base("name=LmrPlastEntities2")
+        public LmrPlastEntities6()
+            : base("name=LmrPlastEntities6")
         {
         }
     

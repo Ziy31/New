@@ -22,13 +22,11 @@ namespace LmrPlast.AddPages
     /// </summary>
     public partial class CarsPage : Page
     {
-        public static ObservableCollection<Cars> Car {  get; set; }
-        public static ObservableCollection<Cars> FilteredCar {  get; set; }
+        public static List<Cars> Car {  get; set; }
         public CarsPage()
         {
             InitializeComponent();
-            Car = new ObservableCollection<Cars>(LMRDB.LMREntities.Cars.ToList());
-            FilteredCar = new ObservableCollection<Cars>(Car);
+            Car = new List<Cars>(LMRDB.LMREntities.Cars.Where(i => i.IsDelete == false).ToList());
             this.DataContext = this;
         }
 
@@ -50,10 +48,13 @@ namespace LmrPlast.AddPages
         private void Delete_Btn_Click(object sender, RoutedEventArgs e)
         {
             var ser = (sender as Button).DataContext as Cars;
-            MessageBox.Show($"Вы действительно хотите удалить водителя {ser.Brand } c Гос.Номерами {ser.AutoNum}?");
-            ser.IsDelete = true;
-            LMRDB.LMREntities.SaveChanges();
-            CarIC.ItemsSource = new List<Cars>(LMRDB.LMREntities.Cars.Where(i => i.IsDelete == false).ToList());
+            var res = MessageBox.Show($"Вы действительно хотите удалить авто {ser.Brand } c Гос.Номерами {ser.AutoNum}?", "Подтверждение удаления", MessageBoxButton.YesNo);
+            if(res == MessageBoxResult.Yes)
+            {
+                ser.IsDelete = true;
+                LMRDB.LMREntities.SaveChanges();
+                CarLV.ItemsSource = new List<Cars>(LMRDB.LMREntities.Cars.Where(i => i.IsDelete == false).ToList());
+            }
         }
 
         private void SearchTb_TextChanged(object sender, TextChangedEventArgs e)
@@ -108,10 +109,10 @@ namespace LmrPlast.AddPages
                  d.AutoNum.Contains(searchText)))
                 .ToList();
 
-            FilteredCar.Clear();
+            Car.Clear();
             foreach (var car in filtered)
             {
-                FilteredCar.Add(car);
+                Car.Add(car);
             }
         }
     }

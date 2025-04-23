@@ -25,6 +25,7 @@ namespace LmrPlast.DateBase
         }
     
         public int id_warehouse { get; set; }
+        public string Title { get; set; }
         public Nullable<decimal> CapacityTons { get; set; }
         public Nullable<decimal> CurrentStockTons { get; set; }
     
